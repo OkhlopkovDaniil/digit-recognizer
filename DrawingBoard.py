@@ -1,6 +1,7 @@
 import pygame as pg
 import numpy as np
 
+from grid import PixelGrid
 
 class DrawingBoard:
     def __init__(self, model):
@@ -8,15 +9,14 @@ class DrawingBoard:
 
         self._width = 28
         self._height = 28
+        self._pixel_height = 30
+        self._pixel_width = 30
 
         self._model = model
-        self._pixels = np.zeros(
-            (self._height, self._width), 
-            dtype=int
+        self.pixel_grid = PixelGrid(
+            self._height, self._width, 
+            self._pixel_height, self._pixel_width
         )
-
-        self._pixel_width = 30
-        self._pixel_height = 30
 
         self._output_width = 170
         self._board_width = self._width * self._pixel_width
@@ -103,25 +103,7 @@ class DrawingBoard:
         ) 
 
         pg.display.update()
-    
-
-    def to_array_pos(self, x, y):
-        pixel_col = x // self._pixel_width
-        pixel_row = y // self._pixel_height
-        
-        return (pixel_row, pixel_col)
-
-
-    def color_pixel(self, pixel_row, pixel_col):
-        max_value = 255
-        colored_pixel = 255
-
-        if pixel_row >= self._height or pixel_col >= self._width:
-            return None 
-
-        if self._pixels[pixel_row][pixel_col] == self._empty_pixel:
-            self._pixels[pixel_row][pixel_col] = colored_pixel / max_value
-    
+     
 
     def draw_pixel(self, pixel_row, pixel_col, color):
         rect_coords = [
@@ -135,7 +117,7 @@ class DrawingBoard:
 
 
     def classify_digit(self):
-        prediction = self._model.predict(np.array([self._pixels]))
+        prediction = self._model.predict(np.array([self.pixel_grid.grid]))
         return np.argmax(prediction)
 
 
@@ -152,10 +134,7 @@ class DrawingBoard:
 
 
     def reset(self):
-        for pixel_row in range(len(self._pixels)):
-            for pixel_column in range(len(self._pixels[0])):
-                self._pixels[pixel_row][pixel_column] = self._empty_pixel
-
+        self.pixel_grid.clear()
         self.create_board()
 
 
@@ -184,9 +163,10 @@ class DrawingBoard:
                         if x >= self._board_width or y >= self._board_width:
                             break
                         
-                        (pixel_row, pixel_col) = self.to_array_pos(x, y)
-                        self.color_pixel(pixel_row, pixel_col)
-                        self.draw_pixel(pixel_row, pixel_col, self._line_color)
+                        (pixel_row, pixel_col) = self.pixel_grid.to_grid_pos(x, y)
+                        if self.pixel_grid.color_pixel(pixel_row, pixel_col, 255):
+                            self.draw_pixel(pixel_row, pixel_col, self._line_color)
+
                         pg.display.update()
 
 
