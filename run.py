@@ -1,11 +1,14 @@
 import tensorflow as tf
-from DrawingBoard import DrawingBoard
-
+from drawingBoard import DrawingBoard
+from recognizer import DigitRecognizer
 
 def main():
     model = tf.keras.models.load_model('models/mnist model')
-    test = DrawingBoard(model)
+    digit_recognizer = DigitRecognizer(model)
+
+    test = DrawingBoard(digit_recognizer)
     test.create_board()
+
     test.main_loop()
 
 
