@@ -1,10 +1,8 @@
 import pygame as pg
-import numpy as np
-
 from grid import PixelGrid
 
 class DrawingBoard:
-    def __init__(self, model):
+    def __init__(self, recognizer):
         pg.init()
 
         self._width = 28
@@ -12,7 +10,7 @@ class DrawingBoard:
         self._pixel_height = 30
         self._pixel_width = 30
 
-        self._model = model
+        self.recognizer = recognizer
         self.pixel_grid = PixelGrid(
             self._height, self._width, 
             self._pixel_height, self._pixel_width
@@ -90,11 +88,6 @@ class DrawingBoard:
         pg.draw.rect(self._board_window, color, rect_coords)
 
 
-    def classify_digit(self):
-        prediction = self._model.predict(np.array([self.pixel_grid.grid]))
-        return np.argmax(prediction)
-
-
     def display_digit(self, digit):
         digit_color = (0, 0, 0)
         digit_font = pg.font.SysFont("Corbel", 150)
@@ -124,7 +117,7 @@ class DrawingBoard:
                     elif event.type == pg.KEYDOWN and event.key == pg.K_BACKSPACE:
                         self.reset()
                     elif event.type == pg.KEYDOWN and event.key == pg.K_SPACE:
-                        guess = self.classify_digit() 
+                        guess = self.recognizer.recognize(self.pixel_grid.grid)
 
                         self.erase_text()
                         self.render_text(f"Model thinks it's {guess}")
