@@ -94,7 +94,7 @@ class DrawingBoard:
 
 
     def main_loop(self):
-        neighbor_color = 200
+        neighbor_color = 160
         neighbor_pix_color = (neighbor_color, neighbor_color, neighbor_color)
 
         if self._board_window is not None:
