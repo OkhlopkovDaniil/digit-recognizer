@@ -21,3 +21,7 @@ Run the game
 python3 run.py
 ```
 
+## Controls
+
+- Press space to recognize 
+- Press backspace to clear the board
