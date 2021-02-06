@@ -5,15 +5,13 @@ from grid import PixelGrid
 class DrawingBoard:
     def __init__(self, recognizer):
         '''
-        Constructs an empty drawing board
+        Constructs an empty drawing board(pygame should be intialized prior to consctruction)
 
         Parameters: 
             recognizer: DigitRecognizer(or any class that have an implementation of recognize method)
         
         Returns: None
         '''
-
-        pg.init()
 
         self._width = 28
         self._height = 28
@@ -179,7 +177,4 @@ class DrawingBoard:
 
                     pg.display.update()
 
-
-    def __del__(self):
-        pg.quit()
 
