@@ -142,8 +142,8 @@ class DrawingBoard:
 
         Returns: None
         '''
-        neighbor_color = 160
-        neighbor_pix_color = (neighbor_color, neighbor_color, neighbor_color)
+        neighbor_color = 160 / 255
+        neighbor_pix_color = (160, 160, 160)
 
         if self._board_window is not None:
             is_going = True
@@ -167,7 +167,7 @@ class DrawingBoard:
                             break
                         
                         (pixel_row, pixel_col) = self.pixel_grid.to_grid_pos(x, y)
-                        self.pixel_grid.color_pixel(pixel_row, pixel_col, 255)
+                        self.pixel_grid.color_pixel(pixel_row, pixel_col, 1)
                         self.draw_pixel(pixel_row, pixel_col, self._line_color)
 
                         neighbors = self.pixel_grid.pixel_neighbors(pixel_row, pixel_col)
