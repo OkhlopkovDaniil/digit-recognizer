@@ -1,5 +1,6 @@
 import tensorflow as tf
-from drawingBoard import DrawingBoard
+
+from drawing_board import DrawingBoard
 from recognizer import DigitRecognizer
 
 def main():
