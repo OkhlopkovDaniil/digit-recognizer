@@ -9,7 +9,7 @@ def main():
 	save_path = 'models/mnist model'
 
 	# hyperparameters
-	epochs = 5
+	epochs = 10
 
 	# training and testing data
 	train_ds = tf.keras.datasets.mnist
