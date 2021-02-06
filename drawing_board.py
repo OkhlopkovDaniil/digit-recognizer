@@ -31,15 +31,12 @@ class DrawingBoard:
         self._line_color = (255, 255, 255)
         self._background_color = (0, 0, 0)
 
-        self._board_window = None
-
-    
-    def create_board(self):
-        self._board_window = pg.display.set_mode(
+        self._board_window = self._board_window = pg.display.set_mode(
             (self._board_width, self._board_height + self.output_height))
-        self._board_window.fill(self._background_color)
-        pg.display.set_caption('MNIST classifier')
         
+        self._board_window.fill(self._background_color)
+        pg.display.set_caption('Digit recognizer')
+
         for cell_id in range(1, self._width+1):
             pg.draw.line(
                 self._board_window,
@@ -47,7 +44,7 @@ class DrawingBoard:
                 (cell_id*self._pixel_width, 0),
                 (cell_id*self._pixel_width, self._board_height)
             )
-        
+
         for cell_id in range(1, self._height+1):
             pg.draw.line(
                 self._board_window,
@@ -58,7 +55,7 @@ class DrawingBoard:
 
         self.current_output = self.render_text("Press space when you're done drawing")
         pg.display.update()
-    
+
      
     def render_text(self, text):
         '''
@@ -127,7 +124,26 @@ class DrawingBoard:
         Returns: None
         '''
         self.pixel_grid.clear()
-        self.create_board()
+
+        self._board_window.fill(self._background_color)
+        
+        for cell_id in range(1, self._width+1):
+            pg.draw.line(
+                self._board_window,
+                self._line_color, 
+                (cell_id*self._pixel_width, 0),
+                (cell_id*self._pixel_width, self._board_height)
+            )
+
+        for cell_id in range(1, self._height+1):
+            pg.draw.line(
+                self._board_window,
+                self._line_color, 
+                (0, cell_id*self._pixel_height),
+                (self._board_width, cell_id*self._pixel_height)
+            )
+
+        self.render_text("Press space when you're done drawing")
 
 
     def main_loop(self):
