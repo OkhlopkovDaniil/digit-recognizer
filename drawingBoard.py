@@ -20,8 +20,8 @@ class DrawingBoard:
         self._board_height = self._height * self._pixel_height
         self.output_height = 50
 
-        self._line_color = (0, 0, 0)
-        self._background_color = (255, 255, 255)
+        self._line_color = (255, 255, 255)
+        self._background_color = (0, 0, 0)
 
         self._board_window = None
         self.current_output = None
@@ -88,24 +88,15 @@ class DrawingBoard:
         pg.draw.rect(self._board_window, color, rect_coords)
 
 
-    def display_digit(self, digit):
-        digit_color = (0, 0, 0)
-        digit_font = pg.font.SysFont("Corbel", 150)
-        digit_text = digit_font.render(str(digit), True, digit_color)
-
-        self._board_window.blit(
-            digit_text,
-            (self._buttons_x_pos + 45, self._output_window_y_pos + 30)
-        ) 
-        pg.display.update()
-
-
     def reset(self):
         self.pixel_grid.clear()
         self.create_board()
 
 
     def main_loop(self):
+        neighbor_color = 200
+        neighbor_pix_color = (neighbor_color, neighbor_color, neighbor_color)
+
         if self._board_window is not None:
             is_going = True
             while is_going is True:
@@ -128,8 +119,15 @@ class DrawingBoard:
                             break
                         
                         (pixel_row, pixel_col) = self.pixel_grid.to_grid_pos(x, y)
-                        if self.pixel_grid.color_pixel(pixel_row, pixel_col, 255):
-                            self.draw_pixel(pixel_row, pixel_col, self._line_color)
+                        self.pixel_grid.color_pixel(pixel_row, pixel_col, 255)
+                        self.draw_pixel(pixel_row, pixel_col, self._line_color)
+
+                        neighbors = self.pixel_grid.pixel_neighbors(pixel_row, pixel_col)
+                        for (neighbor_row, neighbor_col) in neighbors:
+                            if self.pixel_grid.is_available(neighbor_row, neighbor_col):
+                                self.pixel_grid.color_pixel(neighbor_row, neighbor_col, neighbor_color)
+                                self.draw_pixel(neighbor_row, neighbor_col, neighbor_pix_color)
+
 
                     pg.display.update()
 

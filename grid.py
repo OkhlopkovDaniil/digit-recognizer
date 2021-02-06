@@ -27,11 +27,8 @@ class PixelGrid:
         if row > self.height or column > self.width:
             return False
 
-        if self.is_available(row, column):
-            self.grid[row][column] = color
-            return True
-        
-        return False
+        self.grid[row][column] = color
+        return True
 
 
     def pixel_neighbors(self, pixel_row, pixel_column):
