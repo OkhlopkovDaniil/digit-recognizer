@@ -70,7 +70,7 @@ class DrawingBoard:
         Parameters: 
             text: string
         
-        Returns: pygame Surface object
+        Returns: None
         '''
         text_background = self._background_color
         text_color = self._line_color
@@ -80,8 +80,6 @@ class DrawingBoard:
         font = pg.font.Font('freesansbold.ttf', 32)
         text_r = font.render(text, True, text_color, text_background)
         self._board_window.blit(text_r, pos)
-
-        return text_r
     
 
     def erase_text(self):
