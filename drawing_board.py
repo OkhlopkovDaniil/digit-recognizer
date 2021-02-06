@@ -32,7 +32,6 @@ class DrawingBoard:
         self._background_color = (0, 0, 0)
 
         self._board_window = None
-        self.current_output = None
 
     
     def create_board(self):
