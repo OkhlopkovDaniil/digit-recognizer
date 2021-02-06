@@ -1,8 +1,18 @@
 import pygame as pg
 from grid import PixelGrid
 
+
 class DrawingBoard:
     def __init__(self, recognizer):
+        '''
+        Constructs an empty drawing board
+
+        Parameters: 
+            recognizer: DigitRecognizer(or any class that have an implementation of recognize method)
+        
+        Returns: None
+        '''
+
         pg.init()
 
         self._width = 28
@@ -54,6 +64,14 @@ class DrawingBoard:
     
      
     def render_text(self, text):
+        '''
+        Renders the passed text and displays it in the special output space below the board
+
+        Parameters: 
+            text: string
+        
+        Returns: pygame Surface object
+        '''
         text_background = self._background_color
         text_color = self._line_color
 
@@ -67,6 +85,13 @@ class DrawingBoard:
     
 
     def erase_text(self):
+        '''
+        Erases text from the special output space below the board 
+
+        Parameters: None
+
+        Returns: None
+        '''
         coords = [
             0,
             self._board_height+1,
@@ -78,6 +103,16 @@ class DrawingBoard:
 
 
     def draw_pixel(self, pixel_row, pixel_col, color):
+        '''
+        Colors a pixel on the board
+
+        Parameters: 
+            pixel_row: int
+            pixel_col: int
+            color: int
+        
+        Returns: None
+        '''
         rect_coords = [
             pixel_col * self._pixel_width,
             pixel_row * self._pixel_height,
@@ -89,11 +124,26 @@ class DrawingBoard:
 
 
     def reset(self):
+        '''
+        Clears the board
+
+        Parameters: None
+
+        Returns: None
+        '''
         self.pixel_grid.clear()
         self.create_board()
 
 
     def main_loop(self):
+        '''
+        Main loop of the game, allows user to draw, reset and 
+        use network to recognize the number
+
+        Parameters: None
+
+        Returns: None
+        '''
         neighbor_color = 160
         neighbor_pix_color = (neighbor_color, neighbor_color, neighbor_color)
 
