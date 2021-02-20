@@ -6,7 +6,7 @@ Simple digit recognizer trained on MNIST with graphical interface.
 
 Clone the project to your machine
 ```
-git clone https://github.com/OkhlopkovDaniil/digit-recognizer
+https://github.com/okhlopkovd/digit-recognizer
 cd digit-recognizer
 ```
 
